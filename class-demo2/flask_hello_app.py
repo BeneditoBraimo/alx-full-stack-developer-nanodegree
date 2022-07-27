@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask('__name__')
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql+psycopg2://postgres:abc@localhost:5432/example'
-app.config['SQLALCHEMY_TRACK_MOTIFICATIONS'] = False
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 # class to be mapped to the database

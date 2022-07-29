@@ -18,3 +18,8 @@ class User(db.Model):
         return f"<User ID: {self.id}, user name: {self.name}>"
 
 db.create_all()
+
+
+if __name__ == "__main__":
+    app.debug = True
+    app.run("0.0.0.0", port=3000)

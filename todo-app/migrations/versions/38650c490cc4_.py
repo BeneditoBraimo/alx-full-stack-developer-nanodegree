@@ -21,7 +21,6 @@ def upgrade():
     op.create_table('todos',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('description', sa.String(), nullable=False),
-    sa.Column('completed', sa.Boolean(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###

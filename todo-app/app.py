@@ -1,4 +1,5 @@
-from flask import Flask
+import sys
+from flask import Flask, abort, jsonify, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
@@ -21,6 +22,29 @@ class Todo(db.Model):
 
 #db.create_all()
 
+@app.route('/todos/create', method=['POST'])
+
+def create_todo():
+    body = {}
+    error = False
+    try:
+        description = request.get_json()['description']
+        todo = Todo(description=description)
+        body['description'] = todo.description
+        db.session.add(todo)
+        db.session.commit()
+    
+    except:
+        error = True
+        db.session.rollback()
+        print(sys.exc_info())
+
+    finally:
+        db.session.close()
+        if error == True:
+            abort(400)
+        else:
+            return jsonify(body)
 
 if __name__ == "__main__":
     app.debug = True

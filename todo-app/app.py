@@ -1,3 +1,4 @@
+from crypt import methods
 import sys
 from flask import Flask, abort, jsonify, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
@@ -22,7 +23,7 @@ class Todo(db.Model):
 
 #db.create_all()
 
-@app.route('/todos/create', method=['POST'])
+@app.route('/todos/create', methods=['POST'])
 
 def create_todo():
     body = {}

@@ -8,7 +8,7 @@ app.config['SQLALCHEMY_TRACK_NOTIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-class Todos(db.Model):
+class Todo(db.Model):
     __tablename__ = 'todos'
     id = db.Column(db.Integer, primary_key = True)
     description = db.Column(db.String(), nullable=False)
@@ -19,19 +19,9 @@ class Todos(db.Model):
     
 @app.route("/")
 def index():
-    return render_template("index.html", data=[
-        {
-            "description": "Todo 1"
-        },
+    return render_template("index.html", data = Todo.query.all()
 
-        {
-            "description": "Todo 2"
-        },
-
-        {
-            "description": "Todo 3"
-        }
-    ])
+        )
 
 
 

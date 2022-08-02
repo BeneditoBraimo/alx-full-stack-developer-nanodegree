@@ -16,7 +16,9 @@ class Todo(db.Model):
     def __rep__(self):
         return f"<ID: {self.id}, description {self.description}>"
 
-    
+
+db.create_all()
+
 @app.route("/")
 def index():
     return render_template("index.html", data = Todo.query.all()

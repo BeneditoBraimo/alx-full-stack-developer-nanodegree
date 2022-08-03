@@ -1,4 +1,5 @@
-from flask import Flask, render_template
+from crypt import methods
+from flask import Flask, redirect, render_template, request, url_for
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -25,7 +26,13 @@ def index():
 
         )
 
-
+@app.route('/todos/create', methods=['POST'])
+def create_Todo():
+    description = request.form.get('description')
+    todo = Todo(description=description)
+    db.session.add(todo)
+    db.session.commit()
+    return redirect(url_for('index'))
 
 if __name__ == "__main__":
     app.debug = True

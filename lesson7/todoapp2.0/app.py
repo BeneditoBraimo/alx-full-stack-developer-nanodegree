@@ -1,3 +1,4 @@
+from crypt import methods
 from flask import Flask, render_template, request, redirect, url_for, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask import request
@@ -40,6 +41,18 @@ def create_todo():
         else:            
             return jsonify(body)
 
+@app.route('/todo/<todo_id>/set_completed', methods=['POST'])
+def set_completed_todo(todo_id):
+    try:
+        completed = request.get_json()['completed']
+        todo = Todo.query.get(todo_id)
+        Todo.completed = completed
+        db.session.commit()
+    except:
+        db.session.rollback()
+    finally:
+        db.session.close()
+    return redirect(url_for('index'))
 @app.route('/')
 def index():
     return render_template('index.html', data=Todo.query.all())

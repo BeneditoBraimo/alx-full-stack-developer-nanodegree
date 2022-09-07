@@ -5,7 +5,7 @@ import json
 from sqlalchemy.sql.schema import PrimaryKeyConstraint
 
 database_name = "plants"
-database_path = "postgresql://{}:{}@{}/{}".format("postgres", "abc", "localhost:5432", database_name)
+database_path = "postgresql://{}:{}@{}/{}".format("student", "student", "localhost:5432", database_name)
 db = SQLAlchemy()
 
 def setup_db(app, database_path=database_path):

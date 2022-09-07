@@ -29,4 +29,16 @@ def create_app(test_config=None):
             "plants": formated_plants[start:end],
             "total_plants": len(formated_plants)
         })
+
+    @app.route("/plants/<int:plant_id>")
+    def get_specific_plant(plant_id):
+        plant = Plant.query.filter(Plant.id == plant_id).one_or_one()
+        if plant is None:
+            abort(404)
+        else:
+            return {
+                "success": True,
+                "plants": plant.format()
+            }
+
     return app

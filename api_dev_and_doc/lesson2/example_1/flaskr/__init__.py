@@ -1,5 +1,5 @@
 from crypt import methods
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, abort
 from models import setup_db, Plant
 from flask_cors import CORS, cross_origin
 

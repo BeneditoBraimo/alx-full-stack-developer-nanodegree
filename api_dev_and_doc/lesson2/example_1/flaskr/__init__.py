@@ -1,3 +1,5 @@
+from crypt import methods
+from urllib import request
 from flask import Flask, jsonify
 from models import setup_db, Plant
 from flask_cors import CORS, cross_origin
@@ -14,7 +16,18 @@ def create_app(test_config=None):
         response.headers.add("Access-Control-Allow-Headers", "GET, POST, PATCH, DELETE, OPTIONS")
         return response
 
-    @app.route("/")
-    def hello_world():
-        return jsonify({"message": "HELLO, WORLD!"})
+    @app.route("/plants", methods=["GET", "POST"])
+    def get_plants():
+        # implement pagination
+        page = request.args.get("page", 1, type=int)
+        start = (page - 1) * 10
+        end = start + 10
+
+        plants = Plant.query.all()
+        formated_plants = [plant.format() for plant in plants]
+        return jsonify({
+            "success": True,
+            "plants": formated_plants[start:end],
+            "total_plants": len(formated_plants)
+        })
     return app
